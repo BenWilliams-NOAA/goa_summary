@@ -1,0 +1,68 @@
+## 9. Pacific ocean perch
+Status and catch specifications (t) of Pacific ocean perch and projections for `r year+1` and `r year+2`.
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+Total biomass estimates are age-2+ from the age-structured model.
+Catch data are current through `r catch_data_date`.
+
+```{r}
+spp = c("pacific ocean perch", "pop")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+This was a full assessment (biennial to coincide with the NMFS bottom trawl survey). 
+The model was unchanged from the last assessment. 
+Data were updated to include survey biomass estimates for 2021, survey age compositions for 2019, fishery age compositions for 2020, and final catch for 2019 and 2020 and projected catch for 2021-2023.
+
+*Spawning biomass and stock trends*
+Spawning biomass is projected to decrease over the next several years, however, the stock remains well above $B_{40\%}$.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+The GOA Pacific ocean perch stock was estimated to be in Tier 3a. 
+The authors re-evaluated the risk table, and scored the risk categories identically as in the 2020 assessment (i.e., assessment considerations and population dynamics considerations were each scored as Level 2: “substantially increased concerns”, and environmental/ecosystem considerations and fishery performance considerations were each scored as Level 1: “no concern”). 
+The authors recommended the maximum ABC, and the Team concurred with the authors’ recommended ABC and OFL.
+
+*Status determination*
+The stock is not being subjected to overfishing and is neither overfished nor approaching an overfished condition.
+
+*Area apportionment*
+
+The following tables shows the recommended apportionment for 2022 and 2023 ABCs from the random effects model.
+Area apportionments: 
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::mutate(E = WYAK + SEO) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, "Eastern" = E, Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+
+Amendment 41 prohibited trawling in the Eastern area east of 140° W longitude. 
+The Team and authors consider the biomass in the W. Yakutat area (between 147° W and 140° W) to be fishable hence estimate the proportion of biomass in this sub-region for ABC considerations. 
+The proportion of biomass for the EGOA sub-area based on 2021 survey data update is lower—13% compared to the 2019 estimate of 24%. 
+This results in the following apportionment of the Eastern Gulf area:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::mutate(E = WYAK + SEO) %>% 
+  dplyr::select(Year=year, WYAK, SEO, Total = E) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+
+

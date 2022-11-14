@@ -1,0 +1,35 @@
+## 20. Octopus
+Status and catch specifications (t) of GOA octopus. 
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+Catch data are current through `r catch_data_date`. 
+
+```{r}
+spp = c("octopus", "octopuses")
+
+specs %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2) 
+```
+
+*Changes from the previous assessment*
+For 2021, the author followed the 2017 SSC recommendation to use maximum historical catch to recommend OFL. New information includes updated catch data through October 2021 and biomass estimates from the 2021 bottom trawl survey.
+
+*Spawning biomass and stock trends*
+The most recent data from the 2021 GOA trawl survey suggested a decrease in octopus biomass that was an order of magnitude smaller than the 2019 survey biomass. The 2019 survey encountered octopus at a rate that was the second largest (after 2015) in the time-series. The random effects (RE) model estimate of 2021 biomass is 1,199 t compared to the 2019 RE model estimate of 12,257t. The contrast between these values is typical for the complex and underscores the problematic nature of using the trawl survey to generate reliable biomass estimates.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+The Team continues to recommend octopus be managed as Tier 6 with OFL set as maximum catch. 
+The period recommended by the author for determining maximum catch was 2003-2018 and the Team concurs. 
+For 2022 (and 2023), the OFL is 1,307 t equal to the maximum historical catch in 2014, and ABC is 980 t equal to 0.75 * OFL.
+
+*Status determination*
+Biomass estimates for octopuses are unreliable, therefore, determination of spawning biomass or stock status is unavailable. 
+GOA octopus are managed in Tier 6 and it is not possible to make a status determination of whether the stock is overfished or approaching an overfished condition. 
+Because 2020 catch was below the 2020 OFL, the stock is not being subjected to overfishing.
+
+*Area apportionment*
+GOA octopus are managed Gulf-wide.
+

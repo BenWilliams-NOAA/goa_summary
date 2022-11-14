@@ -1,0 +1,47 @@
+## 13. Rougheye and blackspotted rockfish
+Status and catch specifications (t) of rougheye and blackspotted rockfish and projections for `r year+1` and `r year+2`. 
+Biomass for each year corresponds to the projections given in the SAFE report issued in the preceding year. 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+Catch data are current as of `r catch_data_date`. 
+
+```{r}
+spp = c("rougheye and blackspotted rockfish", "rebs")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+This year was a full assessment and the authors used updated catch data, trawl and longline survey biomass, and fishery and longline ages. 
+There have been no model changes for this assessment since 2015.
+
+*Spawning biomass and stock trends*
+Estimated female spawning biomass for 2022 is 8,648 t. 
+This is above the $B_{40\%}$ value of 5,911 t.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+The rougheye/blackspotted complex qualifies as a Tier 3 stock. 
+For 2022 and 2023, the Plan Team accepted the authors’ recommended maximum permissible ABCs and the OFLs as provided in the table above.
+
+*Status determination*
+The stock is not being subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished.
+
+*Area apportionment*
+The recommended apportionments for 2022 and 2023 are calculated using the two-survey random effects model, which was approved for use in this assessment in 2019. 
+This method equally weights the longline and trawl survey indices.
+Rougheye and blackspotted rockfish area apportionment for ABCs are shown below:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::mutate(Total = sum(W, C, E)) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, "Eastern" = E, Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```

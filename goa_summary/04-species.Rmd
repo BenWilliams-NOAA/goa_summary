@@ -1,0 +1,65 @@
+## Stock status
+
+```{r, child="pollock.Rmd", eval = T}
+```
+
+```{r, child="pcod.Rmd", eval = T}
+```
+
+```{r, child="sablefish.Rmd", eval = T}
+```
+
+```{r, child="shallow_flats.Rmd", eval = T}
+```
+
+```{r, child="deep_flats.Rmd", eval = T}
+```
+
+```{r, child="rex.Rmd", eval = T}
+```
+
+```{r, child="arrowtooth.Rmd", eval = T}
+```
+
+```{r, child="flathead.Rmd", eval = T}
+```
+
+```{r, child="pop.Rmd", eval = T}
+```
+
+```{r, child="northern_rock.Rmd", eval = T}
+```
+
+```{r, child="shortraker.Rmd", eval = T}
+```
+
+```{r, child="dusky.Rmd", eval = T}
+```
+
+```{r, child="rebs.Rmd", eval = T}
+```
+
+```{r, child="dsr.Rmd", eval = T}
+```
+
+```{r, child="thornyhead.Rmd", eval = T}
+```
+
+```{r, child="orox.Rmd", eval = T}
+```
+
+```{r, child="atka.Rmd", eval = T}
+```
+
+```{r, child="skates.Rmd", eval = T}
+```
+
+```{r, child="sharks.Rmd", eval = T}
+```
+
+```{r, child="octopus.Rmd", eval = T}
+```
+
+
+
+

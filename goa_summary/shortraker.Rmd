@@ -1,0 +1,44 @@
+## 11. Shortraker rockfish
+Status and catch specifications (t) of shortraker rockfish and projections for `r year+1` and `r year+2`.
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+Catch data are current through `r catch_data_date`. 
+
+```{r}
+spp = c("shortraker rockfish", "shortraker")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+A full stock assessment was conducted this year. Data were updated to include: 1) 2021 bottom trawl survey biomass and length compositions; 2) 1992-1999 longline survey length compositions; 3) 2020 and 2021 longline survey Relative Population Numbers (RPNs), Relative Population Weights (RPWs), and length compositions; 4) 2020 and 2021 longline and trawl fishery length composition; and 5) updated catch from trawl and longline fisheries.
+
+*Spawning biomass and stock trends*
+Applying the random effects model to trawl survey data from 1984–2021 and the longline survey RPW indices resulted in a 2022 biomass estimate of 31,331 t for shortraker rockfish, almost equivalent to the previous estimate (31,465 t).
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Shortraker rockfish are Tier 5 species for specifications where $F_{ABC}$ = 0.75M = 0.0225, and $F_{OFL}$ = 0.03; applying this definition to the biomass results in an OFL 940 t and an ABC of 705 t for 2022.
+
+*Status determination*
+Available data are insufficient to determine stock status relative to overfished criteria. This stock was not being subjected to overfishing in 2021.
+
+*Area apportionment*
+For area apportionment of ABC, the random effects model was fit to area-specific biomass and proportions of survey biomass by area were calculated. 
+Shortraker rockfish area apportionment for ABCs are shown below:
+
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::mutate(Total = sum(W, C, E)) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, "Eastern" = E, Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+

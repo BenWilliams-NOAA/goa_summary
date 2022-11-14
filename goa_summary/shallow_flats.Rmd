@@ -1,0 +1,41 @@
+## 4. Shallow water flatfish
+Status and catch specifications (t) of shallow water flatfish and projections for `r year+1` and `r year+2`. 
+The shallow water flatfish (SWF) complex comprises of northern rock sole, southern rock sole, yellowfin sole, butter sole, starry flounder, English sole, sand sole and Alaska plaice. 
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+Catch data are through `r catch_data_date`.
+
+```{r}
+spp = c("shallow-water flatfish", "shallow_flat")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+Northern and southern rock sole are Tier 3a species and assessed separately from the other shallow water flatfish, which are Tier 5. The shallow water flatfish stock complex has been moved to a 4-year assessment cycle; the last full assessment was completed in 2017. Separate assessment models were developed for northern and southern rock sole, and two-area models were developed for each species due to growth differences between the central and western Gulf of Alaska. The rock sole models included recent fishery catch and survey results.
+
+*Spawning biomass and stock trends*
+The shallow-water flatfish complex 2022 biomass estimate was 360,322 t, which is an (5%) increase from the 2021 value of 342,226 t. Overall, biomass for shallow water flatfish is stable. The northern rock sole biomass and spawning biomass estimates show an increasing trend, and the southern rock sole results show the start of an increasing trend.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Northern and southern rock sole are in Tier 3a while the other species in the complex are in Tier 5. The OFL and ABC estimated for SWF species other than the rock soles were added to the management advice from the 2021 projection model for northern rock sole and southern rock sole to provide a SWF complex OFL and ABC. The Team agreed with author recommendations.
+
+*Status determination*
+Information was insufficient to determine stock status relative to overfished criteria for the complex. For the rock sole species, the assessment model indicates they are not overfished nor are they approaching an overfished condition. Catch levels for this complex remain below the TAC and below levels where overfishing would be a concern.
+
+*Area apportionment*
+The recommended apportionment percentages based on the random effects model applied to area-specific survey biomass estimates (including the 2021 GOA survey) for ABC are:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, WYAK, `EYAK/SEO`, Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```

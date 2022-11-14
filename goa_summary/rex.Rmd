@@ -1,0 +1,42 @@
+## 6. Rex sole
+Status and catch specifications (t) of rex sole and projections for `r year+1` and `r year+2`. 
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+Catch data are current through `r catch_data_date`.
+
+```{r}
+spp = c("rex sole", "rex")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+This stock is on a four-year cycle and a full assessment was conducted in 2021. Data were updated to include catch estimates through 2021, 2018-2021 fishery length compositions, 2017-2020 fishery age compositions, 2019 and 2021 NMFS bottom trawl survey biomass estimates, 2019 and 2021 survey length compositions, and 2019 survey age compositions. In addition, the 1984 and 1987 bottom trawl survey information were excluded, iterative data weighting was conducted using the Francis methodology, and catchability was estimated using a normal prior with a mean of 1.2 based on survey efficiency studies.
+
+*Spawning biomass and stock trends*
+The model estimates of female spawning biomass and total biomass (3+) for the Eastern and Western/Central areas are above B40%. This year’s model indicates an increase in survey biomass since 2019, likely influenced by a recent large year class from 2015 that is present in both the survey and fishery age compositions. The author noted a very low catch estimate in 2021. This was attributed to closures of certain fisheries and marketing challenges.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Projected 2020 female spawning stock biomass is above B40%, therefore rex sole are in Tier 3a. The Team agreed with the author’s recommended ABC and OFL from the updated model.
+
+*Status determination*
+Gulf of Alaska rex sole is not being subjected to overfishing and is neither overfished nor approaching an overfished condition. Catches are well below TACs and below levels where overfishing would be a concern.
+
+*Area apportionment*
+Area apportionments of rex sole ABCs for 2022 and 2023 are based on the random effects model applied to GOA bottom trawl survey biomass in each area. The ABCs calculated for the Western/Central area (based on model estimates) are apportioned based on random effects model predictions of the proportion of survey biomass in Western/Central and the Eastern area ABCs (based on model estimates) are apportioned based on random effects model predictions of the proportion of survey biomass in the West Yakutat and Southeast areas, respectively.
+
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, WYAK, "SEO" = "EYAK/SEO", Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+

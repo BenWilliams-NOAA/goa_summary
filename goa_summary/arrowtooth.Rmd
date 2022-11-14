@@ -1,0 +1,41 @@
+## 7. Arrowtooth flounder
+Status and catch specifications (t) of arrowtooth flounder and projections for `r year+1` and `r year+2`. 
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+Catch data current through `r catch_data_date`.
+
+```{r}
+spp = c("arrowtooth flounder", "arrowtooth")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+A full assessment for arrowtooth flounder was conducted in 2021; the last full assessment was in 2019. Data were updated to include the 2021 NMFS bottom trawl survey biomass estimates, the 2019 trawl survey age compositions, 2019-2020 fishery length compositions, and updated fishery catch data. The recommended model removes the GOA trawl survey size compositions from 1985, 1986, and 1989. The 2021 survey size composition data are not fit in anticipation age 2021 survey ages in the next full assessment.
+
+*Spawning biomass and stock trends*
+Arrowtooth flounder biomass estimates have been decreasing since 2008. The trend in spawning biomass increased from about 725,000 t in 1977 to over 1.1 t by 2008. Since then, the spawning biomass estimate decreased to about 731,000 t in 2021. The largest estimated age-1 recruitment occurred in 2000 (1.7 billion) but has been below average since 2007. However, the 2017 year class appears to be above the longer term mean. The projected spawning biomass for 2022 was 703,853 t, down 3% from last year’s projection for 2022.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Arrowtooth flounder is estimated to be in Tier 3a, and the Team accepted the recommended ABC and OFL. Consistent with decreasing spawning biomass and updated reference fishing mortality rates, the 2022 ABC was 6% lower than the estimate from the 2021 projected value.
+
+*Status determination*
+This stock is not being subjected to overfishing and is neither overfished nor approaching an overfished condition.
+
+*Area apportionment*
+Area apportionments of arrowtooth flounder ABCs for 2022 and 2023 are based on the random effects model applied to GOA bottom trawl survey biomass in each area.
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, WYAK, "SEO" = "EYAK/SEO", Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+

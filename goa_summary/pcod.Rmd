@@ -1,0 +1,51 @@
+## 2. Pacific cod
+
+Status and catch specifications (t) of Pacific cod in recent years. Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+The OFL and ABC for ``r year+1` and `r year+2` are those recommended by the Plan Team. 
+Catch data are current through `r catch_data_date`.
+
+```{r}
+spp = c("pacific cod", "pcod")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+Data updated from the 2021 assessment included federal and state fishery catch for 2020 and 2021 (preliminary catch projected through the end of 2021), federal and state fishery size composition for 2020 and preliminary size compositions for 2021, 2021 AFSC longline survey abundance index (Relative Population Numbers, RPN) and size composition, 2021 AFSC bottom trawl survey conditional length-at-age, and all length composition samples with less than 30 fish were excluded. The increasing trend observed in 2020 continues in 2021 with a 58% increase, however the index remains rather low at 43% of the 1990-2021 average. The author presented the base (19.1) model and two alternatives:
+
+Model 21.1 as 19.1 but with a mortality block for the 2015-2017 period (2014-2016 was used in 19.1).  
+Model 21.2 as 21.1 but with a temperature dependent growth and heatwave dependent recruitment. In addition, 21.2 includes an age-0 beach seine survey index.
+
+In addition, the author presented two projection scenarios: one which used recruitment from the full period (1977-2019), and one which just used recruitment from 2010-2019. The Team concurred with the author’s recommended model 21.2 and recommended the standard post-1977 projection period (Projection A).
+
+*Spawning biomass and stock trends*
+The $B_{40\%}$ estimate was 64,970 t, with projected 2022 spawning biomass of 39,873 t. Spawning biomass is projected to slightly decrease from 2022 to 2023.
+
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Based on previous classification of this stock being in Tier 3, the 2022 spawning biomass was projected to be below $B_{40\%}$ and would therefore be classified as Tier 3b. 
+The $F_{OFL}$ and $F_{ABC}$ values are 0.54 and 0.44, respectively. The maximum permissible ABC is 24,043 t. 
+The recommended ABC is a 1.76% increase from the 2021 ABC of 23,627 t.
+
+*Status determination*
+The stock is not being subjected to overfishing and is neither overfished nor approaching an overfished condition.
+
+*Area apportionment*
+Since the 2014 assessment, the random effects model has been used for Pacific cod apportionment. Using this method with the trawl survey biomass estimates through 2021, the author and the Team recommended area-apportioned ABCs are:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::mutate(Total = sum(W, C, E)) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, "Eastern" = E, Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+

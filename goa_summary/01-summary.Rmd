@@ -1,0 +1,354 @@
+\centering
+
+
+\raggedright
+\clearpage
+
+```{r}
+library(planteam)
+team = read.csv(here::here("goa_summary", 'data', 'goa_team.csv'))
+chair = paste(team %>% 
+          filter(chair==1) %>% 
+          pull(member) %>% 
+          paste("(co-chair), "), collapse = "")
+
+members = team %>% 
+            filter(is.na(chair)) %>% 
+            select(member) %>% 
+            pull(member)
+
+m1 = paste(members[-length(members)], collapse = ", ")
+m2 = members[length(members)]
+
+pt = paste0(chair, m1, " and ", m2)
+
+```
+
+# Summary 
+
+The *National Standard Guidelines for Fishery Management Plans* published by the National Marine
+Fisheries Service (NMFS) require that a stock assessment and fishery evaluation (SAFE) report be
+prepared and reviewed annually for each fishery management plan (FMP). 
+The SAFE reports are intended
+to summarize the best available scientific information concerning the past, present, and possible future
+condition of the stocks and fisheries under federal management. 
+The FMPs for the groundfish fisheries
+managed by the North Pacific Fishery Management Council (Council) require that drafts of the SAFE
+reports be produced each year in time for the December Council meetings.
+
+The SAFE report for the Gulf of Alaska (GOA) groundfish fisheries is compiled by the Plan Team for the
+Gulf of Alaska Groundfish FMP from chapters contributed by scientists at NMFS Alaska Fisheries
+Science Center (AFSC) and the Alaska Department of Fish and Game (ADF&G). 
+The stock assessment
+section includes recommended acceptable biological catch (ABC) levels for each stock and stock
+complex managed under the FMP. 
+The ABC recommendations, together with social and economic
+factors, are considered by the Council in determining total allowable catches (TACs) and other
+management strategies for the fisheries.
+
+The GOA Groundfish Plan Team met virtually over Adobe Connect on `r meeting_dates` to review
+the status of stocks of eighteen species or species groups that are managed under the FMP. 
+The Plan Team review was based on presentations by ADF&G and NMFS AFSC scientists with opportunity for
+public comment and input. 
+Members of the Plan Team who compiled the SAFE report were `r pt`.
+
+*Management Areas and Species*  
+The Gulf of Alaska (GOA) management area lies within the 200-mile U.S. Exclusive Economic Zone
+(EEZ) of the United States (Fig. 1). 
+Formerly, five categories of finfishes and invertebrates were designated for management purposes: target species, other species, prohibited species, forage fish species and non-specified species. 
+Effective for the 2011 fisheries, these categories have been revised in Amendments 96 and 87 to the FMPs for Groundfish of the Bering Sea/Aleutian Islands (BSAI) and Gulf of Alaska (GOA), respectively. 
+This action was necessary to comply with requirements of the Magnuson-Stevens Fishery Conservation and Management Act (MSA) to prevent overfishing, achieve optimum yield, and to comply with statutory requirements for annual catch limits (ACLs) and accountability measures (AMs). 
+Species and species groups must be identified “in the fishery” for which ACLs and AMs are required. 
+An ecosystem component (EC) category is also included in the FMPs for species and species groups that are not:
+
+  1) targeted for harvest
+  2) likely to become overfished or subjected to overfishing, and
+  3) generally retained for sale or personal use.
+
+The effects of the 2011 action amended the GOA and BSAI groundfish FMPs to
+
+  1) identify and manage target groundfish stocks “in the fishery”
+  2) eliminate the “other species” category and manage (GOA) squids, (BSAI and GOA) sculpins,
+(BSAI and GOA) sharks, and (BSAI and GOA) octopuses separately “in the fishery”;
+  3) manage prohibited species and forage fish species in the ecosystem component category; and
+  4) remove the non-specified species outside of the FMPs.
+  
+Amendments 91/100 added grenadiers to the GOA and BSAI FMPs (respectively) as an Ecosystem
+Component in 2014. 
+Amendments 106/117 moved squid to the Ecosystem Component category of the FMP in GOA and BSAI FMPs in 2018. Amendments 110/121 moved sculpins to the Ecosystem Component category of the FMPs in 2020.
+
+```{r fmp, fig.cap="Gulf of Alaska statistical and reporting areas.", eval=F}
+knitr::include_graphics(here::here('figs', "fmp.png"))
+```
+
+Species may be split or combined within the “target species” category according to procedures set forth in the FMP. 
+The three categories of finfishes and invertebrates that have been designated for management purposes are listed below.
+
+<u>In the Fishery</u>:  
+<u>Target species</u> – are those species that support a single species or mixed species target fishery, are
+commercially important, and for which a sufficient database exists that allows each to be managed on its
+own biological merits. 
+Accordingly, a specific total allowable catch (TAC) is established annually for
+each target species or species assemblage. 
+Catch of each species must be recorded and reported. 
+This category includes walleye pollock, Pacific cod, sablefish, deepwater flatfish, 
+shallow water flatfish, rex sole, flathead sole, arrowtooth flounder, 
+Pacific ocean perch, shortraker rockfish, rougheye/blackspotted rockfish, 
+northern rockfish, “other” rockfish, dusky rockfish, demersal shelf rockfish, 
+thornyhead rockfish, Atka mackerel, sharks, octopus, big skates, longnose skates, and other skates.
+
+<u>Ecosystem Component</u>:
+
+1) <u>Prohibited Species</u> – are those species and species groups the catch of which must be avoided while fishing for groundfish, and which must be immediately returned to sea with a minimum of injury except when their retention is authorized by other applicable law. 
+Groundfish species and species groups under the FMP for which the quotas have been achieved shall be treated in the same manner as prohibited species.
+
+2) <u>Forage fish species</u> – are those species listed in the table below, which are a critical food
+source for many marine mammal, seabird and fish species. 
+The forage fish species category is established to allow for the management of these species in a manner that prevents the
+development of a commercial directed fishery for forage fish. 
+Management measures for this species category will be specified in regulations. 
+These may include measures prohibiting directed fishing, limiting allowable bycatch retention, or limiting commercial exchange and the processing of forage fish in a commercial facility.
+
+3) <u>Grenadiers</u> – The grenadier complex (family *Macrouridae*), also known as “rattails”, are comprised of at least seven species of grenadier known to occur in Alaskan waters, but only three are commonly found at depths shallow enough to be encountered in commercial fishing operations or in fish surveys: giant grenadier (*Albatrossia pectoralis*), Pacific grenadier
+(*Coryphaenoides acrolepis*), and popeye grenadier (*Coryphaenoides cinereus*).
+
+4) <u>Squids</u> – Beginning in 2019, squid is included as an Ecosystem Component, rather than in the
+Fishery as a target species. 
+There are approximately 15 species of squids in the GOA, which are mainly distributed along the shelf break. 
+The most abundant species is *Berryteuthis magister* (magistrate armhook squid). 
+Squid in Alaska are generally taken incidentally in the target fishery for pollock. 
+Catches of squids are generally low relative to population size and most of the squid bycatch occurs in the central GOA.
+
+5) <u>Sculpins</u> – Beginning in 2020, sculpin is included as an Ecosystem Component, rather than In
+the Fishery as a target species. 
+
+The following lists the GOA stocks within these FMP species categories:
+
+```{r}
+flextable::flextable(data.frame(infish = c("Target species", 
+                                           "Ecosystem Component",
+                                           "Prohibited Species",
+                                           "Forage Fish Species", 
+                                           "Grenadiers", "Squids", 
+                                           "Sculpins"),
+                                  species = c("Walleye pollock, Pacific cod, 
+                                  Sablefish, Flatfish (shallow-water flatfish, 
+                                  deepwater flatfish, rex sole, flathead sole, 
+                                  and arrowtooth flounder), 
+                                  Rockfish (Pacific ocean perch, 
+                                  northern rockfish, shortraker rockfish, 
+                                  rougheye/blackspotted rockfish, other rockfish, 
+                                  dusky rockfish, demersal shelf rockfish, and thornyhead rockfish), 
+                                  Atka mackerel, skates (big skates, longnose skates, and other skates)",
+                                  "Ecosystem Component",
+                                  "Pacific halibut, 
+                                  Pacific herring, 
+                                  Pacific salmon, 
+                                  Steelhead trout, 
+                                  King crab, 
+                                  Tanner crab",
+                                  "Osmeridae family (eulachon, capelin, and other smelts), 
+                                  Myctophidae family (lanternfishes), 
+                                  Bathylagidae family (deep-sea smelts), 
+                                  Ammodytidae family (Pacific sand lance), 
+                                  Trichodontidae family (Pacific sand fish), 
+                                  Pholidae family (gunnels), 
+                                  Stichaeidae family (pricklebacks, warbonnets, eelblennys, 
+                                  cockscombs, and shannys), 
+                                  Gonostomatidae family (bristlemouths, lightfishes, 
+                                  and anglemouths), 
+                                  Order Euphausiacea (krill)",
+                                  "Macrouridae family",
+                                  "Chiroteuthidae family, 
+                                  Cranchiidae family, 
+                                  Gonatidae family, 
+                                  Onychoteuthidae family, 
+                                  Sepiolidae family",
+                                  "Families: Cottidae, Hemitripteridae, 
+                                  Psychrolutidae, and Rhamphocottidae"))) %>% 
+    flextable::font(fontname = "Times New Roman", part = "all") %>%
+    flextable::fontsize(size = 11, part = "all") %>% 
+    flextable::width(j=1, 2) %>% 
+  flextable::width(j=2, 4) %>% 
+    flextable::set_header_labels(infish = "In Fishery",
+                                 species = "") %>% 
+    flextable::bold(i=2, j=1) %>% 
+  flextable::bold(j=1, part='header') %>% 
+    flextable::merge_h(i=2) %>% 
+  flextable::border_remove() %>%
+    flextable::hline_top(part = "header") %>%
+    flextable::hline_top() %>% 
+  flextable::hline(i=2) %>% 
+  flextable::hline_bottom() %>% 
+  flextable::line_spacing(space = 1, part = "all")
+```
+
+This SAFE report describes stock status of target and non-target species in the fishery. 
+A species or species group from within the fishery category may be split out and assigned an appropriate harvest level.
+Similarly, species in the fishery category may be combined and a single harvest level assigned to the new aggregate species group.
+The harvest level for demersal shelf rockfish in the Eastern Regulatory Area is specified by the Council each year.
+However, management of this fishery is deferred to the State of Alaska with Council oversight.
+
+The GOA FMP recognizes single species and species complex management strategies. 
+Single species specifications are set for stocks individually, recognizing that different harvesting sectors catch an array of species.
+In the Gulf of Alaska these species include pollock, Pacific cod, sablefish, Pacific ocean perch, flathead sole, rex sole, arrowtooth flounder, northern rockfish, shortraker rockfish, dusky rockfish, Atka mackerel, big skates, and longnose skates. Other groundfish species that are usually caught in groups have been managed as complexes (also called assemblages). For example, other rockfish, rougheye and blackspotted rockfish, demersal shelf rockfish, thornyhead rockfish, deepwater flatfish, shallow water flatfish, skates, sharks, and octopus have been managed as complexes.
+The FMP authorizes splitting species, or groups of species, from the complexes for purposes of promoting the goals and objectives of the FMP.
+Atka mackerel was split out from “other species” beginning in 1994.
+In 1998, black and blue rockfish were removed from the GOA FMP and management was conferred to
+the ADF&G. In 2008, dark rockfish were similarly removed from the GOA FMP with sole management
+taken over by the ADF&G. Beginning in 1999, osmerids (eulachon, capelin and other smelts) were
+removed from the “other species” category and placed in a separate forage fish category. 
+In 2004, Amendment 63 to the FMP was approved which moved skates from the other species category into a target species category whereby individual OFLs and ABCs for skate species and complexes could be established.
+
+Groundfish catches are managed against TAC specifications for the EEZ and near coastal waters of the
+GOA. 
+State of Alaska internal water groundfish populations are typically not covered by NMFS surveys
+and catches from internal water fisheries are generally not counted against the TAC. 
+The Team has
+recommended that these catches represent fish outside of the assessed region and should not be counted against an ABC or TAC. Beginning in 2000, the pollock assessment incorporated the ADF&G survey pollock biomass, therefore, the Plan Team acknowledged that it is appropriate to reduce the Western (W), Central (C) and West Yakutat (WY) combined GOA pollock ABC by the anticipated Prince William Sound (PWS) harvest level for the State fishery. 
+Since 2001, the W/C/WY pollock ABCs have been reduced by the PWS GHL as provided by ADF&G, before area apportionments were made. 
+At the 2012 September Plan Team meeting, ADFG presented a proposal to set the PWS GHL in future years as a
+fixed percentage of the W/C/WY pollock ABC of 2.5%. 
+That value is the midpoint between the 2001-2010 average GHL percentage of the GOA ABC (2.44%) and the 1996 and 2012 levels (2.55%). 
+The Plan Team accepted this proposal but noted concern regarding the lack of a biomass-based allocation in PWS. 
+The Plan Team deducted a value for the 2022 and 2023 PWS GHL (equal to 2.5% of the recommended 2022 and 2023 W/C/WY pollock ABCs) from the recommended 2022 and 2023 W/C/WY pollock ABCs (listed in the summary table), before area apportionments were made. 
+It is important to note that the value of the PWS GHL is dependent on the final specified W/C/WY pollock ABC. 
+The values used by the Plan Team to derive the 2022 and 2023 W/C/WY pollock apportioned ABCs are listed in the pollock summary under *Area apportionment*.
+
+The Plan Team has provided subarea ABC recommendations on a case-by-case basis since 1998 based on
+the following rationale. The Plan Team recommended splitting the EGOA ABC for species/complexes
+that would be disproportionately harvested from the West Yakutat area by trawl gear. 
+The Team did not split EGOA ABCs for species that were prosecuted by multi-gear fisheries or harvested as bycatch. 
+For those species where a subarea ABC split was deemed appropriate, two approaches were examined. 
+The point estimate for WY biomass distribution based on survey results was recommended for seven species/complexes to determine the WY and East Yakutat/Southeast Outside subarea ABC splits. 
+For some species/complexes, a range was recommended bounded by the point estimate and the upper end of the 95% confidence limit from all three surveys.
+The rationale for providing a range was based on a desire to incorporate the variance surrounding the distribution of biomass for those species/complexes that could potentially be constrained by the recommended ABC splits.
+
+```{r}
+data.frame(nosplit = c('Pacific cod', 'Atka mackerel', 'shortraker rockfish', 
+                       'rougheye/blackspotted rockfish', 'thornyhead', 
+                       'northern rockfish', 'demersal shelf rockfish', 
+                       'all skates', 'sharks', 'octopus'),
+           splitpoint= c('walleye pollock', 'sablefish', 'deepwater flatfish', 
+                         'shallow-water flatfish', 'rex sole', 
+                         'arrowtooth flounder', 'flathead sole', 
+                         'other rockfish', '', ''), 
+           split95 = c('Pacific ocean perch', 'dusky rockfish', rep('', 8))) %>% 
+  flextable::flextable() %>% 
+  flextable::width(j=1:3, c(1, 2.5, 2.5)) %>% 
+  flextable::set_header_labels(nosplit = "No split",
+                               splitpoint = "Split, Point estimate",
+                               split95 = "Split, Upper 95% CI") %>% 
+      flextable::font(fontname = "Times New Roman", part = "all") %>%
+    flextable::fontsize(size = 11, part = "all") %>% 
+    flextable::bold(j=1:3, part='header') %>% 
+    flextable::border_remove() %>%
+    flextable::hline_top(part = "header") %>%
+    flextable::hline_top() %>% 
+    flextable::hline_bottom() %>% 
+    flextable::width(j=1:3, 2) %>% 
+    flextable::line_spacing(space = 1, part = "all")
+
+```
+
+*Biological Reference Points*  
+A number of biological reference points are used in this SAFE. 
+Among these are the fishing mortality rate (*F*) and stock biomass level (*B*) associated with MSY ($F_{MSY}$ and $B_{MSY}$, respectively). 
+Fishing mortality rates reduce the level of spawning biomass per recruit to some percentage *P* of the pristine level ($F_{P\%}$).
+The fishing mortality rate used to compute ABC is designated FABC, and the fishing mortality rate used to
+compute the overfishing level (OFL) is designated $F_{OFL}$.
+
+*Definition of Acceptable Biological Catch and the Overfishing Level*  
+Amendment 56 to the GOA Groundfish FMP, approved by the Council in June 1998, defines ABC and
+OFL for the GOA groundfish fisheries. The new definitions are shown below, where the fishing mortality
+rate is denoted F, stock biomass (or spawning stock biomass, as appropriate) is denoted *B*, and the *F* and
+*B* levels corresponding to MSY are denoted $F_{MSY}$ and $B_{MSY}$ respectively.
+
+<u>Acceptable Biological Catch</u> is a preliminary description of the acceptable harvest for a given stock or
+stock complex. 
+Its derivation focuses on the status and dynamics of the stock, environmental conditions, other ecological factors, and prevailing technological characteristics of the fishery. 
+The fishing mortality rate used to calculate ABC is capped as described under “overfishing” below.
+
+<u>Overfishing</u> is defined as any amount of fishing more than a prescribed maximum allowable rate. 
+This maximum allowable rate is prescribed through a set of six tiers which are listed below in descending order of preference, corresponding to descending order of information availability. 
+The SSC will have final authority for determining whether a given item of information is reliable for this definition and may use either objective or subjective criteria in making such determinations. 
+For Tier (1), a pdf refers to a probability density function. 
+For Tiers (1-2), if a reliable pdf of BMSY is available, the preferred point estimate of $B_{MSY}$ is the geometric mean of its pdf. 
+For Tiers (1-5), if a reliable pdf of B is available, the preferred point estimate is the geometric mean of its pdf. 
+For Tiers (1-3), the coefficient $\alpha$ is set at a default value of 0.05, with the understanding that the SSC may establish a different value for a specific stock or stock complex as merited by the best available scientific information. 
+For Tiers (2-4), a designation of the form “$F_{X\%}$” refers to the *F* associated with an equilibrium level of spawning per recruit (SPR) equal to X% of the equilibrium level of spawning per recruit in the absence of any fishing. 
+If reliable information sufficient to characterize the entire maturity schedule of a species is not available, the
+SSC may choose to view SPR calculations based on a knife-edge maturity assumption as reliable. 
+For Tier (3), the term $B_{40\%}$ refers to the long-term average biomass that would be expected under average recruitment and $F=F_{40\%}$.
+
+
+**Tier**
+
+|  1) Information available: *Reliable point estimates of B and $B_{MSY}$ and reliable pdf of $F_{MSY}$*.  
+|      1a) Stock status: $B/B_{MSY}>1$  
+|            $F_{OFL}=\mu_A$, *the arithmetic mean of the pdf*  
+|            $F_{ABC}=\mu_H$, *the harmonic mean of the pdf*  
+|      1b) Stock status: $\alpha<B/B_{MSY}\le1$  
+|            $F_{OFL}=\mu_A \times(B/B_{msy}-\alpha)/(1-\alpha)$
+|            $F_{ABC}=\mu_H \times(B/B_{msy}-\alpha)/(1-\alpha)$
+|      1c) Stock status: $B/B_{MSY}\le\alpha$  
+|            $F_{OFL}=0$
+|            $F_{ABC}=0$
+|  2) Information available: *Reliable point estimates of B, $B_{MSY}$, $F_{MSY}$, $F_{35\%}$, and $F_{40\%}$*.  
+|      2a) Stock status: $B/B_{MSY}>1$  .
+|            $F_{OFL}=F_{MSY}$
+|            $F_{ABC}\le F_{MSY} \times(F_{40\%}/F_{35\%})$
+|      2b) Stock status: $\alpha<B/B_{MSY}\le1$  
+|            $F_{OFL}=F_{MSY} \times (B/B_{msy}-\alpha)/(1-\alpha)$
+|            $F_{ABC}=F_{MSY} \times(F_{40\%}/F_{35\%}) \times (B/B_{msy}-\alpha)/(1-\alpha)$
+|      2c) Stock status: $B/B_{MSY}\le\alpha$  
+|            $F_{OFL}=0$
+|            $F_{ABC}=0$
+|  3) Information available: *Reliable point estimates of B, $B_{40\%}$, $F_{35\%}$, and $F_{40\%}$*.  
+|      3a) Stock status: $B/B_{40\%}>1$  .
+|            $F_{OFL}=F_{35\%}$
+|            $F_{ABC}\le F_{40\%}$
+|      3b) Stock status: $\alpha<B/B_{40\%}\le1$  
+|            $F_{OFL}=F_{35\%} \times (B/B_{40\%}-\alpha)/(1-\alpha)$
+|            $F_{ABC}=F_{40\%} \times (B/B_{40\%}-\alpha)/(1-\alpha)$
+|      3c) Stock status: $B/B_{MSY}\le\alpha$  
+|            $F_{OFL}=0$
+|            $F_{ABC}=0$
+|  4) Information available: *Reliable point estimates of B, $F_{35\%}$, and $F_{40\%}$*.  
+|            $F_{OFL}=F_{35\%}$
+|            $F_{ABC}\le F_{40\%}$
+|  5) Information available: *Reliable point estimates of B, and natural mortality rate M*.  
+|            $F_{OFL}=M$
+|            $F_{ABC}\le 0.75 \times M$
+|  6) Information available: *Reliable catch history from 1978 through 1995*.  
+|            $OFL =$ *the average catch from 1978 through 1995, unless an alternative value is established by the* 
+|                     *SSC on the basis of the best available scientific information*
+|            $ABC \le 0.75 \times OFL$
+
+<br>
+<u>Overfished or approaching an overfished condition</u> is determined for all age-structured stock assessments by comparison of the stock level in relation to its MSY level according to the following two harvest scenarios (Note for Tier 3 stocks, the MSY level is defined as $B_{35\%}$): 
+
+Overfished (listed in each assessment as projection scenario 6):  
+
+> In all future years, $F$ is set equal to $F_{OFL}$.
+> (Rationale: This scenario determines whether a stock is overfished. 
+> If the stock is expected to be 1) above its MSY level in `r year` or 2) above ½ of its MSY level in `r year` and above its MSY level in `r year + 10` under this scenario, then the stock is not overfished.)
+
+Approaching an overfished condition (listed in each assessment as scenario 7): 
+
+> In `r year+1`, $F$ is set equal to $max F_{ABC}$, and in all subsequent years, *F* is set equal to \$F\_{OFL}.
+> (Rationale: This scenario determines whether a stock is approaching an overfished condition. 
+> If the stock is 1) above its MSY level in `r year+2` or 2) above 1/2 of its MSY level in `r year+2` and expected to be above its MSY level in `r year+12` under this scenario, then the stock is not approaching an overfished condition.) 
+
+For stocks in Tiers 4-6, no determination can be made of overfished status or approaching an overfished condition as information is insufficient to estimate the MSY stock level.proaching an overfished
+condition as information is insufficient to estimate the MSY stock level.
+
+## Overview of Stock Assessments
+
+The status of individual groundfish stocks managed under the FMP is summarized in this section. 
+The spawning biomass estimates of pollock, sablefish, Dover sole, flathead sole, rex sole, northern and
+southern rock sole, arrowtooth flounder, Pacific ocean perch, rougheye and blackspotted rockfish,
+northern rockfish, and dusky rockfish are above target stock size (Fig. 2). 
+The spawning biomass of Pacific cod is below the proxy for BMSY. The target biomass levels for deepwater flatfish (excluding Dover sole), shallow-water flatfish (excluding northern and southern rock sole), shortraker rockfish, other
+rockfish, demersal shelf rockfish, thornyhead rockfish, Atka mackerel, skates, octopus, and sharks are
+unknown.

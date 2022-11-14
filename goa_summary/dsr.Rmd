@@ -1,0 +1,39 @@
+## 14. Demersal shelf rockfish
+Status and catch specifications (t) of demersal shelf rockfish and projections for `r year+1` and `r year+2`. 
+Biomass for each year corresponds to the projections given in the SAFE report issued in the preceding year. 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+Catch data are current as of `r catch_data_date`. 
+
+```{r}
+spp = c("demersal shelf rockfish", "dsr")
+
+specs %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2) %>% 
+    flextable::footnote(i = 1, j = 3:4,
+            value = flextable::as_paragraph("Non-yelloweye DSR ABCs and OFLs are calculated using Tier 6 methodology and added to the Tier 4 yelloweye ABCs and OFLs for total DSR values."),
+            ref_symbols = c("*"),
+            part = "header")
+```
+
+*Changes from the previous assessment*
+This year was a full assessment and the authors updated catch information and the average weight of yelloweye rockfish caught in the commercial fishery were updated for 2021, relative abundance estimates from the ROV survey were updated for the SSEO region, and density estimates were reduced due to corrections to density estimate coding. No updates were made to the assessment methodology.
+
+*Spawning biomass and stock trends*
+The estimated yelloweye rockfish biomass increased from 10,648 metric tons (t) to 12,388 t from 2021 to 2022. The increase in abundance is driven by an increase in the estimated density of yelloweye rockfish sampled from the ROV survey in the SSEO management area in 2020.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Under Tier 4 for yelloweye rockfish, the overfishing level (OFL) was set using $F_{35\%}$=0.032; which equates to 422 t for 2022. 
+As in the past, $F_{ABC}$ is based on F=M=0.02 rather than the maximum permissible FABC. 
+This resulted in an ABC for 2022 (and 2023) of 268 t, a slight increase from the recommended 2021 ABC.
+
+*Status determination*
+The DSR stock complex in the SEO district of the Gulf of Alaska is not being subjected to overfishing. Information is insufficient to determine stock status relative to overfished criteria as estimates of spawning biomass are unavailable.
+
+*Area apportionment*
+The ABC and OFL for DSR are for the SEO District. 
+DSR management is deferred to the State of Alaska and any further apportionment within the SEO District is at the discretion of the State.
+
+

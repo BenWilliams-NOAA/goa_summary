@@ -1,0 +1,56 @@
+## 16. Other rockfish
+Status and catch specifications (t) of other rockfish. Biomass estimates for `r year+1` and `r year+2` are based on the random effects model for Tier 4 and 5 species. 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+*Note that 1 t of northern rockfish has been added for management purposes to Other rockfish complex in WYAK of the EGOA. 
+Catch data are current through `r catch_data_date`. 
+
+```{r}
+spp = c("other rockfish", "orox")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+New data included in the assessment are 2021 Gulf of Alaska survey biomass estimates and updated total catch for 2003–2021. 
+The random effects models for the Tiers 4 and 5 species were updated to include the 2021 GOA trawl survey data. 
+The trawl survey fractional biomass for separating EGOA biomass between WY and EY/SE subareas were updated to reflect assessment methods and catch data from unidentified rockfish have been added to this assessment.
+
+*Spawning biomass and stock trends*
+The estimated biomass declined 22% from 2020 and there is no evidence to suggest that overfishing is occurring. 
+There is considerable variation in individual species biomass estimates that can mostly be attributed to sampling variation as many of these species are poorly sampled by the trawl survey. 
+Higher discard rates were observed despite the full retention mandate going into effect in 2020 for HAL and CVs and is being further investigated by AKRO and OLE.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+The Plan Team recommended rolling-over ABC (4,053 t) and OFL (5,320 t) recommendations from 2021 due to declines in estimated survey biomass for harlequin (-94%), redstripe (-85%), and sharpchin rockfish (-26%) from the previous survey. 
+These dramatic changes in biomass are likely due to the patchiness distribution of these species and affect the application of weighted M for Tier 5 (17 species) when recommending ABC and OFLs. 
+The Team discussed the Tier 5 weighted M approach encompassing a large species complex with varying life histories and this approach was intended to minimize influence of individual species may have on M, therefore due to these uncertainties the Team recommended rolling-over ABC and OFL recommendations from 2021.
+
+*Status determination*
+The OR complex is not being subjected to overfishing. 
+Information is insufficient to determine stock status relative to overfished criteria as estimates of spawning biomass are unavailable.
+
+*Area apportionment*
+Area apportionment is based on the sum of random effects model biomass (Tier 4 and 5 species) and catch history (Tier 6 species) by region. 
+The Plan Team recommends a single ABC for the combined WGOA and CGOA areas to address concerns about the ability to manage smaller ABCs in the WGOA.
+As the Team recommended rolling over ABCs/OFLs from 2021 due to uncertainties in survey biomass, the apportionment percentages are also rolled-over to reflect the 2021 percentages as shown here:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::select(Year=year, "W/C GOA" = `W/C`, WYAK, `EYAK/SEO`, Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header") %>% 
+  flextable::footnote(i = 1, j = 3,
+            value = flextable::as_paragraph("Note that the small northern rockfish ABC apportionments from the Eastern Gulf are combined with the other rockfish complex ABC in the West Yakutat management area for management purposes and are added here from the Team recommended apportionments for Other rockfish."),
+            ref_symbols = c("*"),
+            part = "header")
+```
+
+

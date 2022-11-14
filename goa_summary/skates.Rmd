@@ -1,0 +1,66 @@
+## 18. Skates
+Status and catch specifications (t) of skates in recent years. 
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+Catch data are current through `r catch_data_date`. 
+
+```{r}
+spp = c("big skate", "big", "longnose skate", "longnose", "other skates", "skate")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area %in% c("Total", "GOA-wide")) %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+bio %>% 
+    dplyr::filter(stock %in% spp) %>% 
+    dplyr::rename(!!nameit(.) := biomass) %>% 
+    dplyr::select(-type) %>% 
+    dplyr::mutate(stock = case_when(stock=="big" ~ "big skate",
+                                    stock=="longnose" ~ "longnose skate",
+                                    stock=="skate" ~ "other skates")) %>% 
+    left_join(specs2, .) %>% 
+    dplyr::mutate(stock = tools::toTitleCase(stock)) %>% 
+    dplyr::select(Species = stock, Year = year, dplyr::contains("biomass"), 
+                  OFL=ofl, ABC=abc, TAC=tac, Catch=catch) %>% 
+    flextable::flextable() %>% 
+    flextable::merge_v(j=1) %>% 
+    flextable::colformat_num(j=2, big.mark = "") %>% 
+    flextable::hline(i=c(4,8)) %>% 
+    flextable::align(j=1, part="all") %>% 
+    flextable::valign(valign="bottom", part="header") %>% 
+    flextable::fix_border_issues() 
+```
+
+*Changes from the previous assessment*
+Skates are assessed on a biennial schedule with full assessments presented in odd years to coincide with the timing of survey data. A full assessment was completed for 2021, there were no changes in methodology.
+New inputs this year include updated fishery catch (thru 2021) and length composition data (through 2019), biomass estimates and length composition data from the 2021 GOA bottom trawl survey and noncommercial catch data through 2020. Also, the assessment includes information from four additional surveys: the AFSC longline survey, the IPHC longline survey, and two bottom trawl surveys conducted by the Alaska Department of Fish and Game (Kodiak and Prince William Sound).
+
+*Spawning biomass and stock trends*
+Big skate survey biomass from the AFSC BTS decreased relative to 2019 based on new survey estimates while the longnose skate survey biomass increased. The biomass of the other skates increased but there is still a continued decline from a peak in 2013. The additional survey information supports a conclusion of a substantial decline in Bathyraga skate biomass since 2009, the current biomass level is similar to the 1990s. Smaller big skates seem to inhabit the EGOA and larger big skates in WGOA indicating movement through their life stages.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Skates are managed in Tier 5. Applying M=0.1 and 0.75M to the estimated biomass from the random effects models for each stock component gives stock specific OFLs and ABCs. The Team concurred with the author’s recommendations.
+
+*Status determination*
+Catch as currently estimated does not exceed any GOA-wide OFLs, and therefore, none of the skate stocks are subject to overfishing. It is not possible to determine the status of stocks in Tier 5 with respect to overfished status.
+
+*Area apportionment*
+The author continued the use of the random effects (RE) model, a separate RE model was run for each managed group, and for each regulatory area.
+Big and longnose skates have area-specific ABCs and Gulf-wide OFLs; other skates have a Gulf-wide ABC and OFL.
+
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  dplyr::mutate(area = ifelse(stock=="other skates", "Total", area)) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::select(Year=year, Species = stock, Western = W, Central = C, Eastern = E, Total) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header") %>% 
+  flextable::hline(i=c(2,4)) %>% 
+  flextable::merge_v(j=1:2) %>% 
+  flextable::fix_border_issues()
+  
+```

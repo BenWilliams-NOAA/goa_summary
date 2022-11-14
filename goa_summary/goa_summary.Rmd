@@ -1,0 +1,109 @@
+---
+title:
+  "STOCK ASSESSMENT AND FISHERY EVALUATION REPORT FOR THE GROUNDFISH RESOURCES OF THE GULF OF ALASKA"
+  
+subtitle:  
+  "Compiled by <br> The Plan Team for the Groudfish Fisheries of the Gulf of Alaska  <br> ![](goa.png)  <br> with contributions by:  November 22 North Pacific Fishery Management Council 1007 West Third, Suite 400 Anchorage, AK 99501" 
+ 
+
+# don't do anything below this line unless you are cool with the consequences
+output:
+  bookdown::word_document2:
+     reference_docx: "template.docx"
+     toc: true
+     number_sections: false
+
+always_allow_html: true        
+fontsize: 11pt
+geometry:
+  - top=1in
+  - bottom=1in
+  - left=1in
+  - right=1in     
+fig_caption: true
+
+---
+
+```{r setup, include=FALSE, echo = FALSE}
+# remotes::install_github("crsh/rmdfiltr")
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = "!h", out.extra = "")
+```
+
+
+```{r load, warning=F, message=F}
+# load
+library(dplyr)
+library(planteam)
+library(flextable)
+
+# globals
+yr = year = 2022
+meeting_dates = 'November 14-18, 2022'
+catch_data_date = "November 6th"
+```
+
+```{r}
+# read in data 
+# biomass - gonna need to get this from authors
+vroom::vroom(here::here("goa_summary", "data", "bio.csv")) %>% 
+  filter(year >= yr-1) -> bio
+
+# read in september specs
+readxl::read_xlsx(here::here("goa_summary", "data", "goa_specs.xlsx"), 
+                  sheet="sep",
+                  range="A5:F91", 
+                  col_names = c("stock", "area", "ofl0", "abc0", "tac0", "catch0"),
+          col_types = c("text", "text", rep("numeric", 4)))  %>% 
+  dplyr::mutate(stock = tolower(stock)) %>% 
+  tidyr::fill(stock, .direction = 'down') -> sep_specs 
+  
+readxl::read_xlsx(here::here("goa_summary", "data", "goa_specs.xlsx"), 
+                  sheet="nov",
+                  range="A5:J91", 
+                  col_names = c("stock", "area", "ofl1", "abc1", "tac1", 
+                                "catch1", "ofl2", "abc2", 
+                                "ofl3", "abc3"),
+                  col_types = c("text", "text", rep("numeric", 8))) %>% 
+  dplyr::mutate(stock = tolower(stock)) %>% 
+  tidyr::fill(stock, .direction = 'down') -> nov_specs
+
+# join the sep and nov specs
+sep_specs %>% 
+  left_join(nov_specs) %>% 
+  dplyr::mutate(stock = tolower(stock)) %>% 
+  tidyr::fill(stock, .direction = 'down') %>% 
+  tidyr::pivot_longer(-c(stock, area)) %>% 
+  tidyr::separate(name, c("measure", 'year'), sep = "(?<=[A-Za-z])(?=[0-9])" ) %>% 
+  dplyr::mutate(year = as.numeric(year) -1 + yr) -> specs
+
+# create the apportionment data 
+nov_specs %>% 
+  dplyr::mutate(stock = tolower(stock)) %>% 
+  tidyr::fill(stock, .direction = 'down') %>% 
+  dplyr::select(stock, area, abc2, abc3) %>% 
+  tidyr::pivot_longer(-c(stock, area)) %>% 
+  tidyr::separate(name, c("measure", 'year'), sep = "(?<=[A-Za-z])(?=[0-9])" ) %>% 
+  dplyr::mutate(year = as.numeric(year)-1+yr) %>% 
+  dplyr::select( -measure) %>% 
+  dplyr::filter(area != "Subtotal") -> app
+
+
+# 
+flextable::set_flextable_defaults(font.family = "Times New Roman",
+                                  font.size = 11)
+```
+
+```{r, child="01-summary.Rmd", eval = T}
+```
+
+```{r, child="02-econ.Rmd", eval = T}
+```
+
+```{r, child="03-ecosystem.Rmd", eval = T}
+```
+
+```{r, child="04-species.Rmd", eval = T}
+```
+
+```{r, child="05-tables.Rmd", eval = T}
+```

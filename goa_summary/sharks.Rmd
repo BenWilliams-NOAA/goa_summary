@@ -1,0 +1,41 @@
+## 19. Sharks
+Status and catch specifications (t) of the GOA shark complex and projections for `r year+1` and `r year+2`.
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+Catch data are current through `r catch_data_date`. 
+
+```{r}
+spp = "sharks"
+
+specs %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2) 
+```
+
+*Changes from the previous assessment*
+The GOA shark complex (spiny dogfish, Pacific sleeper shark, salmon shark, and other/unidentified sharks) is assessed on a biennial stock assessment schedule. A full assessment was conducted for the shark complex this year. New information for this assessment includes GOA shark catch from 2003-2020 (through October 13, 2020), as well as the following updated survey indices:
+• NMFS bottom trawl through 2019,
+• NMFS longline through 2020,
+• International Pacific Halibut Commission (IPHC) longline through 2019, and
+• Alaska Department of Fish and Game (ADF&G) trawl through 2019 and longline through 2020
+There were no changes to assessment methodology.
+
+*Spawning biomass and stock trends*
+There was a decline in spiny dogfish biomass in the 2019 trawl survey, this model is based on random effects to smooth the time series from the trawl survey biomass. 
+Tier 6 shark recommendations are determined by average historical catches from 1997-2007, which did not change for this assessment.
+The recommended ABC is 3,755 t and OFL is 5,006 t for the shark complex. This is a 54% decrease from the 2020 ABC of 8,184 t.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+For ABC/OFL estimates, spiny dogfish have been elevated to Tier 5, while the other components remain in Tier 6. The total OFL for the GOA shark complex is the sum of the Tier 5 and Tier 6 recommendations for each species.
+
+*Status determination*
+Sharks are caught incidentally in other target fisheries. 
+There are currently no directed commercial fisheries for shark species in federally or state managed waters of the GOA, and most incidental catch is discarded. 
+There were insufficient data to determine if the shark complex is in an overfished condition, but the complex is not currently being subjected to overfishing. 
+There is no evidence to suggest that overfishing is occurring for any shark species in the GOA because the OFL has not been exceeded.
+
+*Area apportionment*
+GOA sharks are managed Gulf-wide.
+

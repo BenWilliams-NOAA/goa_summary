@@ -1,0 +1,58 @@
+## 12. Dusky rockfish
+Status and catch specifications (t) of dusky rockfish and projections for `r year+1` and `r year+2`.
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+Catch data are current through `r catch_data_date`. 
+
+```{r}
+spp = c("dusky rockfish", "dusky")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+This year was a partial assessment so there was no change to the assessment model methodology. New data added to the projection model included updated catch data from 2020 and new estimated catches for 2021-2023. To estimate future catches, authors updated the yield ratio (the average ratio of catch to ABC for the last three complete catch years) and multiplied this value by the projected ABCs from the updated projection model to generate 2022 and 2023 catches.
+
+*Spawning biomass and stock trends*
+The estimates of spawning biomass for 2022 and 2023 from the current year projection model are 38,371 t and 36,853 t which are above the $B_{35\%}$ estimate of 21,299 t.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+The GOA dusky rockfish is classified as a Tier 3 stock and is assessed using a statistical age structure model. A maximum allowable ABC of 7,069 t was recommended for the 2022 fishery from the updated projection model. An adjusted ABC of 5,372 t resulted from the “stair step” methodology that was requested by the SSC. The newly estimated OFL for 2022 was 8,614 t. These ABC and OFL values for the 2022 fishery are only slightly changed from the specifications made last year.
+
+*Status determination*
+The stock is not being subjected to overfishing, is not currently overfished, nor is it approaching an overfished condition.
+
+*Area apportionment*
+Apportionments are based on the random effects model applied to the trawl survey biomass estimates. 
+Northern rockfish area apportionment for ABCs are shown below:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::mutate(E = WYAK + `EYAK/SEO`) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, "Eastern" = E, Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+
+Amendment 41 prohibited trawling in the Eastern area east of 140° W longitude. 
+The ratio of biomass still obtainable in the W. Yakutat area (between 147° W and 140° W) is 0.75. 
+This results in the following apportionment to the W. Yakutat area:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::mutate(E = WYAK + `EYAK/SEO`) %>% 
+  dplyr::select(Year=year, WYAK, `EYAK/SEO`, Total = E) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```

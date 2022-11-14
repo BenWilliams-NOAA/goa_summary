@@ -1,0 +1,45 @@
+## 5. Deep water flatfish
+Status and catch specifications (t) of deepwater flatfish (Dover sole and others) and projections for `r year+1` and `r year+2`. 
+Biomass for each year is for Dover sole only and corresponds to the model estimate associated with the ABC for that year. 
+Catch data are current through `r catch_data_date`.
+```{r}
+spp = c("deep-water flatfish", "deep_flat")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+The deepwater flatfish complex is comprised of Dover sole, Greenland turbot, Kamchatka flounder, and deepsea sole. A full assessment for the Gulf of Alaska deepwater flatfish complex was conducted in 2019. Projections were run and updated numbers were used for 2022 specifications.
+One notable change from the previous assessment is the inclusion of Kamchatka flounder in ABC and OFL calculations. Previously, catch of Kamchatka flounder catch was accounted for under the Deepwater flatfish complex TAC, but the species was not accounted for during OFL and ABC determination. The Team appreciates efforts made by the author to correct this disconnect.
+
+*Spawning biomass and stock trends*
+The model estimate of 2022 spawning stock biomass for Dover sole is 26,349 t, which is well above B40% (7,613 t). Spawning stock biomass and total biomass are expected to remain stable through 2023. Stock trends for Greenland turbot, Kamchatka flounder, and deepsea sole are unknown.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+For ABC/OFL calculations, a Tier 3a approach was used for Dover sole and Tier 6 approaches were used for Greenland turbot, Kamchatka flounder, and deepsea sole. OFLs and ABCs for the individual species in the deepwater flatfish complex are determined and then summed for calculating complex-level OFLs and ABCs.
+
+*Status determination*
+The Gulf of Alaska Dover sole stock is not being subjected to overfishing and is neither overfished nor approaching an overfished condition. Information is insufficient to determine stock status relative to overfished criteria for Greenland turbot, Kamchatka flounder, and deepsea sole. Since Dover sole comprises approximately 96% of the deepwater flatfish complex they are considered the main component for determining the status of this stock complex. Catch levels for this complex remain well below the TAC and below levels where overfishing would be a concern.
+
+*Area apportionment*
+The random effects model is used to determine area apportionment for Dover sole as recommended by the Team in 2016. The Greenland turbot and deepsea sole portion of the apportionment is based on the relative proportion of survey biomass of these species found in each area, averaged over the years 2001–2021. The ABC by area for the deepwater flatfish complex is the sum of the species-specific portions of the ABC. Area apportionments of deepwater flatfish ABCs for 2022 and 2023 based on the fraction of the survey biomass in each area for Greenland turbot, and deepsea sole (2001–2021) and from random effects model by area for Dover sole.
+The area apportionment for 2022 and 2023 are as follows:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, WYAK, "SEO" = "EYAK/SEO", Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::add_body_row(values = list("", "XX%", "XX%", "XX%", "XX%", '100%')) %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+
+
+

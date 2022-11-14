@@ -1,0 +1,103 @@
+## 1. Walleye pollock
+
+
+Status and catch specifications (t) of pollock and projections for `r year+1` and `r year+2`. 
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year (age 3+ for W/C/WYAK and survey biomass for SEO). 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+Catch data were through `r catch_data_date`. 
+
+The GOA-wide and W/C/WYAK ABCs listed in this table are before reductions for the Prince William Sound GHL. 
+However, the federal TACs from earlier years reflect reductions from the ABC due to State waters GHL. 
+State waters GHL was computed as 2.5% of the total W/C/WYAK ABC.
+
+```{r}
+spp = "pollock"
+
+specs %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  dplyr::mutate(area = case_when(area == 'Total' ~ "Goa-wide",
+                                 area %in% c('EYAK/SEO') ~ "SEO",
+                                 TRUE ~ "W/C/WYAK")) %>% 
+  group_by(area, year, measure) %>% 
+  summarise(value = round(mean(value, na.rm = T))) %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+ bio %>% 
+    dplyr::filter(stock %in% spp) %>% 
+    dplyr::rename(!!planteam::nameit(.) := biomass) %>% 
+    dplyr::select(-type, -stock) %>% 
+    left_join(specs2, .) %>% 
+    dplyr::select(Area = area, Year = year, dplyr::contains("biomass"), 
+                  OFL=ofl, ABC=abc, TAC=tac, Catch=catch) %>% 
+    dplyr::arrange(dplyr::desc(Area)) %>%
+    flextable::flextable() %>% 
+    flextable::merge_v(j=1) %>% 
+    flextable::colformat_num(j=1, big.mark = "") %>% 
+    flextable::hline(i=4) %>% 
+    flextable::align(j=1, part="all") %>% 
+    flextable::valign(valign="bottom", part="header") %>% 
+    flextable::fix_border_issues() 
+
+```
+
+
+
+*Changes from the previous assessment*
+This year’s pollock assessment features the following new data: 
+1) 2020 total catch and catch-at-age from the fishery, 
+2) 2021 biomass and age composition from the Shelikof Strait acoustic survey, 
+3) 2021 NMFS Bottom Trawl survey biomass and length composition, 
+4) 2021 Summer GOA-wide acoustic survey biomass and length composition, 
+and 5) 2021 biomass and 2020 age composition from the ADF&G crab/groundfish trawl survey.
+The age-structured assessment model used for GOA W/C/WYAK pollock assessment was identical to the 2019 and 2020 assessments (Model 19.1).
+
+*Spawning biomass and stock trends*
+The spawning stock is projected to continue to decline slightly in 2022 and 2023 as the 2012 year class is
+further reduced in abundance, however with new fish recruited into the fishery, spawning biomass is
+projected to start increasing in 2025. The presence of several incoming year classes should result in a
+stabilization in biomass. However, the 2021 Shelikof Strait survey showed an unexpected reduction in the
+estimated abundance of the 2018 year class (aged 3) relative to their abundance in the 2019 survey. The
+2017 year-class (aged 4) is still present in high numbers, and a strong new 2020 class was detected in all
+surveys. Overall, the Shelikof Strait survey data in 2021 showed a similar biomass to 2020. Overall,
+survey indices seem to be providing similar trends with closer agreement with the ADF&G survey, as
+well as the 2021 NMFS bottom trawl survey results. An exception to this was the acoustic summer
+survey, which was 25% percent lower than the 2019 estimate.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+The model projection of female spawning biomass in 2022 is 186,481, which is above B40% (172,000),
+which places the W/C/WYAK Gulf of Alaska pollock stock in Tier 3a. 
+The model estimated 2022 age-3+ biomass is 1,097,340 t (for the W/C/WYAK areas) which was similar to the 2020 estimate (1,007,850 t). 
+The author scored the current risk conditions as Level 1 for all four risk categories, and thus did not
+recommend a reduction from maximum permissible ABC.
+The Team supported the authors’ recommendation using the assessment-derived maximum permissible
+ABC for 2022. The resulting 2022 ABC for pollock in the Gulf of Alaska west of 140° W longitude
+(W/C/WYAK) is 133,081 t which is a 26 % increase from the 2021 ABC. 
+The OFL is 154,983 t for 2022.
+The 2021 Prince William Sound (PWS) GHL is 3,327t (2.5% of the W/C/WYAK ABC).
+Pollock in southeast Alaska (East Yakutat and Southeastern areas) are in Tier 5. 
+The recommended ABC is 11,363 t for 2022 and 2023, which is an increase of 12% from the 2020 ABC. 
+These recommendations are based on natural mortality (0.3) and the random effects model fit to the 1990-2021 bottom trawl survey biomass estimates in Southeast Alaska.
+
+*Status determination*
+The Gulf of Alaska pollock stock is not being subjected to overfishing and is neither overfished nor
+approaching an overfished condition.
+
+*Area apportionment*
+The assessment was updated to include the most recent data available for area apportionments within each
+season (Appendix 1D.3 of the GOA pollock chapter). 
+For winter seasons, model estimates of biomass for winter acoustic surveys conducted were used as a basis for apportionment. 
+pportionments for the B1 and B2 seasons were based on a 3-year weighted average of the sum of the AFSC bottom trawl survey and the
+gulf-wide acoustic summer survey (unchanged from the previous assessment). 
+Area apportionments, including the 2.5% of the ABC for the State of Alaska managed pollock fishery in Prince William Sound, are as follows:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::select(Year=year, 4:8, "PWS GHL" = `State GHL`, Total) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+

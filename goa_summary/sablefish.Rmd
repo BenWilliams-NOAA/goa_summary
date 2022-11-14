@@ -1,0 +1,84 @@
+## 3. Sablefish
+Status and catch specifications (t) of sablefish in recent years. 
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+Beginning in 2020, the OFL was specified Alaska-wide (for both BSAI and GOA). 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+Catch data are current through `r catch_data_date`.
+
+```{r}
+spp = c("sablefish", "alaska-wide ofl and abc")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area %in% c("GOA Total", "AK Total")) %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+ bio %>% 
+    dplyr::filter(stock %in% spp) %>% 
+    dplyr::rename(!!nameit(.) := biomass) %>% 
+    dplyr::select(-type, -stock) %>% 
+    left_join(specs2, .) %>% 
+    dplyr::select(Area = area, Year = year, dplyr::contains("biomass"), 
+                  OFL=ofl, ABC=abc, TAC=tac, Catch=catch) %>% 
+    dplyr::arrange(dplyr::desc(Area)) %>%
+    flextable::flextable() %>% 
+    flextable::merge_v(j=1) %>% 
+    flextable::colformat_num(j=2, big.mark = "") %>% 
+    flextable::hline(i=4) %>% 
+    flextable::align(j=1, part="all") %>% 
+    flextable::valign(valign="bottom", part="header") %>% 
+    flextable::fix_border_issues() 
+```  
+*Changes from the previous assessment*
+New data in the assessment model included relative abundance and length data from the 2021 longline survey, length data from the fixed gear fishery for 2020, length data from the trawl fisheries for 2020, age data from the longline survey and fixed gear fishery for 2020, updated catch for 2020, and projected 2021–2023 catches. 
+Estimates of killer and sperm whale depredation in the fishery were updated and projected for 2021–2023. 
+The 2021 NMFS Gulf of Alaska trawl survey extended the relative abundance index and length data for waters less than 500m and these were also used in the assessment. Due to funding issues and timing constraints, 2020 fixed gear fishery catch-per-unit effort (CPUE) data were unavailable (from logbooks). 
+Additionally, the proposed 2021 SAFE model (model 21.12) included revised estimates of growth-, weight-, and maturity-at-age as reviewed during the September 2021 Plan Team meeting.
+In addition to updating biological information, the model removed the prior constraint of survey catchability. 
+Also, due to changes in the availability of smaller sablefish at depth, the model allowed for catchability and selectivity changes (in 2016) for the fixed gear fishery and selectivity in the longline survey. 
+These changes improved model fits to the index data and the retrospective patterns. 
+Finally, the composition data was reweighted so that the implied variances were more consistent with the model specification and other data components.
+
+*Spawning biomass and stock trends*
+Survey abundance and biomass indices continued to increase in 2021. 
+The longline survey abundance index increased by 9% in 2021 following a 32% increase in 2020. 
+The biennial trawl survey biomass index has increased nearly five-fold since 2013, with a 40% increase from 2019 to 2021. The data and model indicate strong year classes from 2014, 2016, 2017, and 2018. 
+Based on the strength of these recent year classes, biomass estimates have more than doubled from a time series low of 215,000 t in 2015 to 553,000 t in 2021, exceeding the highs of the mid-1980s. 
+Spawning biomass is also increasing but more gradually since many of these year classes are immature. 
+The 2021 SSB was estimated to be 36% of the B100% value. Spawning biomass is projected to increase to $B_{44\%}$ in 2022 and $B_{51\%}$ in 2023 (contingent on the estimates of young-fish abundance remains strong).
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Sablefish have been classified for management under Tier 3 of FMP. Reference points were estimated based on average recruitment from 1977 – 2017, and age-specific schedules of selectivity, weight-at-age, natural mortality, and maturity. 
+The $B_{40\%}$ estimate was 118,140 t and the projected 2022 spawning biomass of 128,789 t places sablefish in sub-tier “a” of Tier 3. 
+The updated point estimates of $F_{40\%}$ and $F_{35\%}$ from this assessment were 0.080 and 0.094, respectively. 
+Thus, the maximum permissible value of $F_{ABC}$ under Tier 3a is 0.080, which translates into a 2022 maximum permissible (and author recommended) ABC (combined areas) is 34,863 t. 
+The OFL fishing mortality rate is 0.094, which translates into a 2022 OFL (combined areas) of 40,432 t. 
+Adjusting for estimated whale-depredation, the 2022 combined areas ABC is 34,521 t and 22,794 t for the Gulf of Alaska. 
+The Teams agreed with these recommendations.
+
+*Status determination*
+Model projections indicate that this stock is not subjected to overfishing, not overfished, nor approaching an overfished condition.
+
+*Area apportionment*
+In 2013, the Team and SSC agreed that a fixed apportionment scheme was acceptable. 
+In 2020, results of a simulation analysis resulted in recommending a five-year average survey apportionment method be adopted. The authors continued to recommend this approach and the Plan Teams agreed. 
+The SSC recommended a transition to this method and the authors noted that would mean a “50% stair step” from the 2019 fixed apportionment values towards the 2021 five-year average survey apportionment. 
+This gives the following area-specific ABCs (including deductions for estimated whale depredation):
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::group_by(year) %>% 
+  dplyr::mutate(`AK Total` = sum(`AK Total`, na.rm=T)) %>% 
+  tidyr::drop_na() %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, WYAK, SEO, `GOA Total`, `AK Total` ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header") %>% 
+  flextable::footnote(i = 1, j = 4:5,
+            value = flextable::as_paragraph("95:5 split in the EGOA following the trawl ban in SEO"),
+            ref_symbols = c("*"),
+            part = "header")
+```
+

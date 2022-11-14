@@ -1,0 +1,52 @@
+## 10. Northern rockfish
+Status and catch specifications (t) of northern rockfish and projections for `r year+1` and `r year+2`.
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+Catch data are current through `r catch_data_date`. 
+
+> *Note that for management purposes, the northern rockfish ABC from the eastern GOA is combined with the other rockfish complex. > To reflect this, the ABCs for `r year+1` and `r year+2` listed below deduct 1 t from Plan Team recommended ABC for northern rockfish.
+
+```{r}
+spp = c("northern rockfish", "nork")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+As this is a partial assessment, no changes were made to the assessment methodology. 
+New data added to the projection model included updated catch data from 2020 and new estimated catches for 2021-2023.
+
+*Spawning biomass and stock trends*
+The 2022 spawning biomass estimate (40,474 t) is above B40% but projected to decrease to 37,408 t in 2023. 
+Total biomass (ages 2+) for 2022 is 100,371 t and is projected to decrease to 96,045 in 2023.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Northern rockfish are estimated to be in Tier 3a. 
+The Team agreed with the authors’ recommendation to use the maximum permissible 2022 ABC and OFL values of 5,147 t and 6,143 t, respectively. 
+This ABC is a 4% decrease from last year.
+
+*Status determination*
+This stock is not being subjected to overfishing and is neither overfished nor approaching an overfished condition.
+
+*Area apportionment*
+Area apportionments of northern rockfish ABC’s for 2023 and 2024 are based on the random effects model applied to GOA bottom trawl survey biomass estimates through 2021.
+Northern rockfish area apportionment for ABCs are shown below:
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, "Eastern" = E, Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header") %>% 
+  flextable::footnote(i = 1, j = 4,
+            value = flextable::as_paragraph("Note that the small northern rockfish ABC apportionments from the Eastern Gulf are combined with the other rockfish complex ABC in the West Yakutat management area for management purposes and are removed here from the Team recommended apportionments and ABC totals for northern rockfish."),
+            ref_symbols = c("*"),
+            part = "header")
+```
+

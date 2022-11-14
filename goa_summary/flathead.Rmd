@@ -1,0 +1,43 @@
+## 8. Flathead sole
+Status and catch specifications (t) of flathead sole and projections for `r year+1` and `r year+2`. 
+Biomass for each year corresponds to the projection given in the SAFE report issued in the preceding year. 
+Catch data current through `r catch_data_date`.
+
+```{r}
+spp = c("flathead sole", "flathead")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+The flathead sole stock is assessed on a four-year schedule. A full stock assessment was scheduled for 2021, but due to limited staff resources, the full stock assessment will be postponed. This year a partial assessment was presented. The projection model was run using updated catches.
+
+*Spawning biomass and stock trends*
+The 2022 spawning biomass estimate increased slightly from 2021 and projected to increase through 2023. Biomass (age 3+) for 2022 decreased slightly, and is estimated to be 279,975 t.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Flathead sole are determined to be in Tier 3a. 
+For 2021, the Team concurred with the authors’ recommendation to use the maximum permissible ABC of 40,175 t from the updated projection. 
+The $F_{OFL}$ is set at $F_{35\%}$ (0.36) which corresponds to an OFL of 48,928 t.
+
+*Status determination*
+This stock is not being subjected to overfishing and is neither overfished nor approaching an overfished condition.
+
+*Area apportionment*
+Area apportionment for ABC of flathead sole is currently based on the proportion of survey biomass projected for each area in 2021 and 2022 using the survey averaging random effects model developed by the survey averaging working group.
+
+```{r}
+app %>% 
+  dplyr::filter(stock %in% spp) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  dplyr::select(Year=year, "Western" = W, "Central" = C, WYAK, "SEO" = "EYAK/SEO", Total ) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::valign(valign="bottom", part="header")
+```
+

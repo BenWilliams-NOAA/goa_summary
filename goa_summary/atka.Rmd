@@ -1,0 +1,40 @@
+## 17. Atka mackerel
+Status and catch specifications (t) of Atka mackerel in recent years. 
+Atka mackerel are managed under Tier 6 because reliable estimates of biomass are not available. 
+The OFL and ABC for `r year+1` and `r year+2` are those recommended by the Plan Team. 
+Catch data are current through `r catch_data_date`. 
+
+```{r}
+spp = c("atka mackerel", "atka")
+
+specs %>% 
+  dplyr::filter(stock %in% spp, area=="Total") %>% 
+  tidyr::pivot_wider(names_from = measure, values_from = value) -> specs2
+  
+sum_tbl(spp, bio, specs2)
+```
+
+*Changes from the previous assessment*
+There are no changes to the assessment methodology. 
+Atka mackerel are assessed on a biennial schedule to coincide with the timing of survey data. 
+New information in this year’s full assessment includes updated catch data, age data from the 2019 and 2020 GOA fisheries, age data from the 2019 GOA bottom trawl survey, biomass estimates from the 2021 GOA bottom trawl survey, and length frequency data from the 2021 GOA bottom trawl survey.
+
+*Spawning biomass and stock trends*
+Estimates of spawning biomass are unavailable for Atka mackerel. 
+The very patchy distribution of GOA Atka mackerel results in highly variable estimates of abundance. 
+The 2021 survey biomass estimates are essentially based on 1,459 fish caught in one haul off Unalaska Island in the Western Gulf of Alaska. 
+A total of 1,507 Atka mackerel were caught in the 2021 survey, with a single haul capturing 98% of the Atka mackerel catch. 
+Therefore, survey biomass estimates are considered unreliable indicators of absolute abundance or indices of trend.
+
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+Since 1996, the maximum permissible ABC has been 4,700 t under Tier 6 and the OFL has been 6,200 t. 
+The Plan Team continues to recommend that GOA Atka mackerel be managed under Tier 6. 
+The Plan Team recommends a 2022 ABC for GOA Atka mackerel equal to the maximum permissible value of 4,700 t. 
+The 2022 OFL is 6,200 t under Tier 6.
+
+Due to concerns over uncertainty with the ABC estimates using Tier 6, a low TAC is recommended to provide for anticipated incidental catch needs of other fisheries, principally for Pacific cod, rockfish, and pollock fisheries.
+
+*Status determination*
+Information is insufficient to determine stock status relative to overfished criteria. 
+Catches are below ABC and below levels where overfishing would be a concern.
+
