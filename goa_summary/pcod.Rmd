@@ -40,7 +40,7 @@ Since the 2014 assessment, the random effects model has been used for Pacific co
 ```{r}
 app %>% 
   dplyr::filter(stock %in% spp) %>% 
-  tidyr::pivot_wider(names_from = area, values_from = value) %>% 
+  tidyr::pivot_wider(names_from = area, values_from = value, values_fn = {mean}) %>% 
   dplyr::mutate(Total = sum(W, C, E)) %>% 
   dplyr::select(Year=year, "Western" = W, "Central" = C, "Eastern" = E, Total ) %>% 
   flextable::flextable() %>% 

@@ -32,7 +32,7 @@ specs %>%
     dplyr::arrange(dplyr::desc(Area)) %>%
     flextable::flextable() %>% 
     flextable::merge_v(j=1) %>% 
-    flextable::colformat_num(j=1, big.mark = "") %>% 
+    flextable::colformat_num(j=2, big.mark = "") %>% 
     flextable::hline(i=4) %>% 
     flextable::align(j=1, part="all") %>% 
     flextable::valign(valign="bottom", part="header") %>% 

@@ -32,14 +32,14 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = 
 
 ```{r load, warning=F, message=F}
 # load
-library(dplyr)
-library(planteam)
-library(flextable)
-
-# globals
-yr = year = 2022
-meeting_dates = 'November 14-18, 2022'
-catch_data_date = "November 6th"
+  library(dplyr)
+  library(planteam)
+  library(flextable)
+  
+  # globals
+  yr = year = 2022
+  meeting_dates = 'November 14-18, 2022'
+  catch_data_date = "November 5th"
 ```
 
 ```{r}
@@ -49,37 +49,35 @@ vroom::vroom(here::here("goa_summary", "data", "bio.csv")) %>%
   filter(year >= yr-1) -> bio
 
 # read in september specs
-readxl::read_xlsx(here::here("goa_summary", "data", "goa_specs.xlsx"), 
-                  sheet="sep",
-                  range="A5:F91", 
-                  col_names = c("stock", "area", "ofl0", "abc0", "tac0", "catch0"),
-          col_types = c("text", "text", rep("numeric", 4)))  %>% 
-  dplyr::mutate(stock = tolower(stock)) %>% 
-  tidyr::fill(stock, .direction = 'down') -> sep_specs 
+# readxl::read_xlsx(here::here("goa_summary", "data", "goa_specs.xlsx"), 
+#                   sheet="sep",
+#                   range="A5:F91", 
+#                   col_names = c("stock", "area", "ofl0", "abc0", "tac0", "catch0"),
+#           col_types = c("text", "text", rep("numeric", 4)))  %>% 
+#   dplyr::mutate(stock = tolower(stock)) %>% 
+#   tidyr::fill(stock, .direction = 'down') -> sep_specs 
   
-readxl::read_xlsx(here::here("goa_summary", "data", "goa_specs.xlsx"), 
-                  sheet="nov",
-                  range="A5:J91", 
-                  col_names = c("stock", "area", "ofl1", "abc1", "tac1", 
-                                "catch1", "ofl2", "abc2", 
-                                "ofl3", "abc3"),
-                  col_types = c("text", "text", rep("numeric", 8))) %>% 
-  dplyr::mutate(stock = tolower(stock)) %>% 
-  tidyr::fill(stock, .direction = 'down') -> nov_specs
 
-# join the sep and nov specs
-sep_specs %>% 
-  left_join(nov_specs) %>% 
+# make sure all the species names are merged in the spreadsheet...
+
+readxl::read_xlsx(here::here("goa_summary", "data", "goa_specs_2022.xlsx"),
+                  range = "A4:N90",
+                  col_names = c("stock", "area", 
+                                "ofl0", "abc0", "tac0", "catch0",
+                                "ofl1", "abc1", "tac1", "catch1", 
+                                "ofl2", "abc2", 
+                                "ofl3", "abc3"),
+                  col_types = c("text", "text", rep("numeric", 12))) %>% 
   dplyr::mutate(stock = tolower(stock)) %>% 
-  tidyr::fill(stock, .direction = 'down') %>% 
+  tidyr::fill(stock, .direction = 'down') -> dat
+  
+dat %>% 
   tidyr::pivot_longer(-c(stock, area)) %>% 
   tidyr::separate(name, c("measure", 'year'), sep = "(?<=[A-Za-z])(?=[0-9])" ) %>% 
-  dplyr::mutate(year = as.numeric(year) -1 + yr) -> specs
+  dplyr::mutate(year = as.numeric(year)-1 + yr) -> specs
 
 # create the apportionment data 
-nov_specs %>% 
-  dplyr::mutate(stock = tolower(stock)) %>% 
-  tidyr::fill(stock, .direction = 'down') %>% 
+dat %>% 
   dplyr::select(stock, area, abc2, abc3) %>% 
   tidyr::pivot_longer(-c(stock, area)) %>% 
   tidyr::separate(name, c("measure", 'year'), sep = "(?<=[A-Za-z])(?=[0-9])" ) %>% 
