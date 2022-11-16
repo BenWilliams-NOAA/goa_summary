@@ -15,9 +15,9 @@ spp = "pollock"
 
 
 dat %>% 
-    dplyr::filter(stock %in% spp, !(area%in%c("State GHL", "Subtotal"))) %>% 
+    dplyr::filter(stock %in% spp, !(area%in%c("State GHL", "W (610)", "C (620)", "C (630)"))) %>% 
     dplyr::mutate(area = case_when(area == 'Total' ~ "Goa-wide",
-                                 area %in% c('EYAK/SEO') ~ "SEO",
+                                 area %in% 'EYAK/SEO' ~ "SEO",
                                  TRUE ~ "W/C/WYAK")) %>% 
   tidyr::pivot_longer(-c(stock, area)) %>% 
   tidyr::separate(name, c("measure", 'year'), sep = "(?<=[A-Za-z])(?=[0-9])" ) %>% 
