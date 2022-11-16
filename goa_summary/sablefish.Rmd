@@ -15,7 +15,7 @@ specs %>%
  bio %>% 
     dplyr::filter(stock %in% spp) %>% 
     dplyr::rename(!!nameit(.) := biomass) %>% 
-    dplyr::select(-type, -stock) %>% 
+    dplyr::select(-type, -stock, -area) %>% 
     left_join(specs2, .) %>% 
     dplyr::select(Area = area, Year = year, dplyr::contains("biomass"), 
                   OFL=ofl, ABC=abc, TAC=tac, Catch=catch) %>% 
@@ -69,7 +69,8 @@ app %>%
   dplyr::filter(stock %in% spp) %>% 
   tidyr::pivot_wider(names_from = area, values_from = value) %>% 
   dplyr::group_by(year) %>% 
-  dplyr::mutate(`AK Total` = sum(`AK Total`, na.rm=T)) %>% 
+  dplyr::mutate(`GOA Total` = sum(W, C, WYAK, SEO, na.rm=T),
+                `AK Total` = sum(`AK Total`, na.rm=T)) %>% 
   tidyr::drop_na() %>% 
   dplyr::select(Year=year, "Western" = W, "Central" = C, WYAK, SEO, `GOA Total`, `AK Total` ) %>% 
   flextable::flextable() %>% 
