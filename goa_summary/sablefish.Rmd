@@ -19,6 +19,8 @@ specs %>%
     left_join(specs2, .) %>% 
     dplyr::select(Area = area, Year = year, dplyr::contains("biomass"), 
                   OFL=ofl, ABC=abc, TAC=tac, Catch=catch) %>% 
+   group_by(Area, Year) %>% 
+   dplyr::summarise_all(sum, na.rm=T) %>% 
     dplyr::arrange(dplyr::desc(Area)) %>%
     flextable::flextable() %>% 
     flextable::merge_v(j=1) %>% 
