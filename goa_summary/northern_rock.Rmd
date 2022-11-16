@@ -15,23 +15,23 @@ specs %>%
 sum_tbl(spp, bio, specs2)
 ```
 
-*Changes from the previous assessment*
+*Changes from the previous assessment*  
 As this is a partial assessment, no changes were made to the assessment methodology. 
 New data added to the projection model included updated catch data from 2020 and new estimated catches for 2021-2023.
 
-*Spawning biomass and stock trends*
+*Spawning biomass and stock trends*  
 The 2022 spawning biomass estimate (40,474 t) is above B40% but projected to decrease to 37,408 t in 2023. 
 Total biomass (ages 2+) for 2022 is 100,371 t and is projected to decrease to 96,045 in 2023.
 
-*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*  
 Northern rockfish are estimated to be in Tier 3a. 
 The Team agreed with the authors’ recommendation to use the maximum permissible 2022 ABC and OFL values of 5,147 t and 6,143 t, respectively. 
 This ABC is a 4% decrease from last year.
 
-*Status determination*
+*Status determination*  
 This stock is not being subjected to overfishing and is neither overfished nor approaching an overfished condition.
 
-*Area apportionment*
+*Area apportionment*  
 Area apportionments of northern rockfish ABC’s for 2023 and 2024 are based on the random effects model applied to GOA bottom trawl survey biomass estimates through 2021.
 Northern rockfish area apportionment for ABCs are shown below:
 

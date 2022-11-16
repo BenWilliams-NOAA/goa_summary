@@ -13,21 +13,21 @@ specs %>%
 sum_tbl(spp, bio, specs2)
 ```
 
-*Changes from the previous assessment*
+*Changes from the previous assessment*  
 The flathead sole stock is assessed on a four-year schedule. A full stock assessment was scheduled for 2021, but due to limited staff resources, the full stock assessment will be postponed. This year a partial assessment was presented. The projection model was run using updated catches.
 
-*Spawning biomass and stock trends*
+*Spawning biomass and stock trends*  
 The 2022 spawning biomass estimate increased slightly from 2021 and projected to increase through 2023. Biomass (age 3+) for 2022 decreased slightly, and is estimated to be 279,975 t.
 
-*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*  
 Flathead sole are determined to be in Tier 3a. 
 For 2021, the Team concurred with the authors’ recommendation to use the maximum permissible ABC of 40,175 t from the updated projection. 
 The $F_{OFL}$ is set at $F_{35\%}$ (0.36) which corresponds to an OFL of 48,928 t.
 
-*Status determination*
+*Status determination*  
 This stock is not being subjected to overfishing and is neither overfished nor approaching an overfished condition.
 
-*Area apportionment*
+*Area apportionment*  
 Area apportionment for ABC of flathead sole is currently based on the proportion of survey biomass projected for each area in 2021 and 2022 using the survey averaging random effects model developed by the survey averaging working group.
 
 ```{r}

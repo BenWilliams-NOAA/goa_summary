@@ -14,24 +14,24 @@ specs %>%
 sum_tbl(spp, bio, specs2)
 ```
 
-*Changes from the previous assessment*
+*Changes from the previous assessment*  
 New information in this full assessment includes: 1) catch estimates (though October 6th 2020); 2) length compositions from the 2018 and 2019 longline and trawl fisheries; 3) length compositions from the 2019 GOA bottom trawl survey; 4) updated Relative Population Numbers (RPNs), Relative Population Weights (RPW), and length compositions from the 2018, 2019, and 2020 AFSC annual longline surveys; 5) updated RPWs from the 1992–2020 GOA longline survey for use in the random effects model; and 6) updated biomass values from the 1984–2019 GOA trawl surveys for use in the random effects model.
 The methodology (Model 18.1) used to estimate exploitable biomass and calculate ABC and OFL values for the 2021 fishery is unchanged from the last full assessment.
 
-*Spawning biomass and stock trends*
+*Spawning biomass and stock trends*  
 Estimates of spawning biomass are unavailable for thornyheads. 
 The most recent 2019 trawl survey estimate was 4% lower than the 2017 estimate, whereas the longline survey RPW increased 15% between 2018 and 2019, and then decreased by 27% in 2020. 
 The thornyhead complex is a Tier 5 stock, and biomass is estimated by applying the random effects method to the trawl and longline survey biomass time series by region and depth in order to compensate for missing data (i.e., thornyheads are found down to 1000m, but deep survey strata are not sampled in in each trawl survey). 
 The biomass estimates from the random effects model show a slightly increasing trend from 2010–2019 and a projected stable trend after 2020.
 
-*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*  
 The Plan Team concurred with the authors’ recommendations for ABC and OFL for 2021 and 2022. Gulf-wide catch of thornyheads in 2019 was 39% of the ABC.
 
-*Status determination*
+*Status determination*  
 The thornyhead complex is not being subjected to overfishing. 
 Information is insufficient to determine stock status relative to overfished criteria as estimates of spawning biomass are unavailable.
 
-*Area apportionment*
+*Area apportionment*  
 For area apportionment of ABC, the random effects model was fit to area-specific biomass and proportions of survey biomass by area were calculated. 
 Thoryhead rockfish area apportionment for ABCs are shown below:
 

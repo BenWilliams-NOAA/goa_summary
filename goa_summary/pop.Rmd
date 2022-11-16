@@ -15,23 +15,23 @@ specs %>%
 sum_tbl(spp, bio, specs2)
 ```
 
-*Changes from the previous assessment*
+*Changes from the previous assessment*  
 This was a full assessment (biennial to coincide with the NMFS bottom trawl survey). 
 The model was unchanged from the last assessment. 
 Data were updated to include survey biomass estimates for 2021, survey age compositions for 2019, fishery age compositions for 2020, and final catch for 2019 and 2020 and projected catch for 2021-2023.
 
-*Spawning biomass and stock trends*
+*Spawning biomass and stock trends*  
 Spawning biomass is projected to decrease over the next several years, however, the stock remains well above $B_{40\%}$.
 
-*Tier determination/Plan Team discussion and resulting ABCs and OFLs*
+*Tier determination/Plan Team discussion and resulting ABCs and OFLs*  
 The GOA Pacific ocean perch stock was estimated to be in Tier 3a. 
 The authors re-evaluated the risk table, and scored the risk categories identically as in the 2020 assessment (i.e., assessment considerations and population dynamics considerations were each scored as Level 2: “substantially increased concerns”, and environmental/ecosystem considerations and fishery performance considerations were each scored as Level 1: “no concern”). 
 The authors recommended the maximum ABC, and the Team concurred with the authors’ recommended ABC and OFL.
 
-*Status determination*
+*Status determination*  
 The stock is not being subjected to overfishing and is neither overfished nor approaching an overfished condition.
 
-*Area apportionment*
+*Area apportionment*  
 
 The following tables shows the recommended apportionment for 2022 and 2023 ABCs from the random effects model.
 Area apportionments: 

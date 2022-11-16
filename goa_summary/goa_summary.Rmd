@@ -43,10 +43,29 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = 
 ```
 
 ```{r}
+# need to reload the package - until then use this
+sum_tbl <- function(spp, biomass, specs) {
+  biomass %>%
+  dplyr::filter(stock %in% spp) %>%
+  dplyr::rename(!!nameit(.) := biomass) %>%
+  dplyr::select(-type, -stock, -area) %>%
+    left_join(specs, .) %>%
+  dplyr::select(Year = year, dplyr::contains("biomass"),
+                OFL=ofl, ABC=abc, TAC=tac, Catch=catch) %>%
+  # dplyr::arrange(dplyr::desc(Area)) %>%
+  flextable::flextable() %>%
+  flextable::merge_v(j=1) %>%
+  flextable::colformat_num(j=1, big.mark = "") %>%
+  # flextable::hline(i=c(4,8)) %>%
+  flextable::align(j=1, part="all") %>%
+  flextable::valign(valign="bottom", part="header") %>%
+  flextable::fix_border_issues()
+}
 # read in data 
 # biomass - gonna need to get this from authors
 vroom::vroom(here::here("goa_summary", "data", "bio.csv")) %>% 
-  filter(year >= yr-1) -> bio
+  dplyr::rename(type = rec_age) %>%
+  dplyr::filter(year >= yr-1) -> bio
 
 # read in september specs
 # readxl::read_xlsx(here::here("goa_summary", "data", "goa_specs.xlsx"), 
