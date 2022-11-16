@@ -14,13 +14,20 @@ specs %>%
   
  bio %>% 
     dplyr::filter(stock %in% spp) %>% 
+   dplyr::mutate(area = case_when(area=='GOA' ~ "GOA Total",
+                                  area=='AK' ~ "AK Total")) %>% 
     dplyr::rename(!!nameit(.) := biomass) %>% 
-    dplyr::select(-type, -stock, -area) %>% 
+    dplyr::select(-type, -stock) %>% 
     left_join(specs2, .) %>% 
     dplyr::select(Area = area, Year = year, dplyr::contains("biomass"), 
                   OFL=ofl, ABC=abc, TAC=tac, Catch=catch) %>% 
    group_by(Area, Year) %>% 
    dplyr::summarise_all(sum, na.rm=T) %>% 
+   dplyr::mutate(`age-4+ Biomass` = ifelse(`age-4+ Biomass`==0, NA, `age-4+ Biomass`),
+                 OFL = ifelse(OFL==0, NA, OFL),
+                 ABC = ifelse(ABC==0, NA, ABC),
+                 TAC = ifelse(TAC==0, NA, TAC),
+                 Catch = ifelse(Catch==0, NA, Catch)) %>% 
     dplyr::arrange(dplyr::desc(Area)) %>%
     flextable::flextable() %>% 
     flextable::merge_v(j=1) %>% 
