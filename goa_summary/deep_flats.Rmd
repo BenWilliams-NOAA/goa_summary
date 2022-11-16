@@ -35,9 +35,10 @@ app %>%
   tidyr::pivot_wider(names_from = area, values_from = value) %>% 
   dplyr::select(Year=year, "Western" = W, "Central" = C, WYAK, "SEO" = "EYAK/SEO", Total ) %>% 
   flextable::flextable() %>% 
-  flextable::add_body_row(values = list("", "XX%", "XX%", "XX%", "XX%", '100%')) %>% 
+  # flextable::add_body_row(values = list("", "XX%", "XX%", "XX%", "XX%", '100%')) %>% 
   flextable::colformat_num(j=1, big.mark = "") %>% 
   flextable::align(j=1, part="all") %>% 
+    flextable::padding(padding=1) %>% 
   flextable::valign(valign="bottom", part="header")
 ```
 

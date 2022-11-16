@@ -45,7 +45,8 @@ app %>%
   dplyr::select(Year=year, "Western" = W, "Central" = C, "Eastern" = E, Total ) %>% 
   flextable::flextable() %>% 
   flextable::colformat_num(j=1, big.mark = "") %>% 
-  flextable::align(j=1, part="all") %>% 
+  flextable::align(j=1, part="all") %>%   
+  flextable::padding(padding=1) %>% 
   flextable::valign(valign="bottom", part="header")
 ```
 

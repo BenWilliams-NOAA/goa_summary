@@ -59,6 +59,7 @@ sum_tbl <- function(spp, biomass, specs) {
   # flextable::hline(i=c(4,8)) %>%
   flextable::align(j=1, part="all") %>%
   flextable::valign(valign="bottom", part="header") %>%
+      flextable::padding(padding=1) %>% 
   flextable::fix_border_issues()
 }
 # read in data 
@@ -107,7 +108,8 @@ dat %>%
 
 # 
 flextable::set_flextable_defaults(font.family = "Times New Roman",
-                                  font.size = 11)
+                                  font.size = 11, padding = 1)
+
 ```
 
 ```{r, child="01-summary.Rmd", eval = T}

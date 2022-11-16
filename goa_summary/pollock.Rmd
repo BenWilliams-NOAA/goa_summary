@@ -43,6 +43,7 @@ dat %>%
     flextable::colformat_num(j=2, big.mark = "") %>% 
     flextable::hline(i=c(4,8)) %>% 
     flextable::align(j=1, part="all") %>% 
+     flextable::padding(padding=1) %>% 
     flextable::valign(valign="bottom", part="header") %>% 
     flextable::fix_border_issues() 
 
@@ -106,6 +107,7 @@ app %>%
   flextable::flextable() %>% 
   flextable::colformat_num(j=1, big.mark = "") %>% 
   flextable::align(j=1, part="all") %>% 
+    flextable::padding(padding=1) %>% 
   flextable::valign(valign="bottom", part="header")
 ```
 

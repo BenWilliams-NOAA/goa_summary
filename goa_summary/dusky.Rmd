@@ -38,6 +38,7 @@ app %>%
   flextable::flextable() %>% 
   flextable::colformat_num(j=1, big.mark = "") %>% 
   flextable::align(j=1, part="all") %>% 
+    flextable::padding(padding=1) %>% 
   flextable::valign(valign="bottom", part="header")
 ```
 
@@ -54,5 +55,6 @@ app %>%
   flextable::flextable() %>% 
   flextable::colformat_num(j=1, big.mark = "") %>% 
   flextable::align(j=1, part="all") %>% 
+    flextable::padding(padding=1) %>% 
   flextable::valign(valign="bottom", part="header")
 ```

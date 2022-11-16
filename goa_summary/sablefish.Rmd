@@ -25,6 +25,7 @@ specs %>%
     flextable::colformat_num(j=2, big.mark = "") %>% 
     flextable::hline(i=4) %>% 
     flextable::align(j=1, part="all") %>% 
+     flextable::padding(padding=1) %>% 
     flextable::valign(valign="bottom", part="header") %>% 
     flextable::fix_border_issues() 
 ```  
@@ -77,6 +78,7 @@ app %>%
   flextable::colformat_num(j=1, big.mark = "") %>% 
   flextable::align(j=1, part="all") %>% 
   flextable::valign(valign="bottom", part="header") %>% 
+    flextable::padding(padding=1) %>% 
   flextable::footnote(i = 1, j = 4:5,
             value = flextable::as_paragraph("95:5 split in the EGOA following the trawl ban in SEO"),
             ref_symbols = c("*"),

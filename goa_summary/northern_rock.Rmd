@@ -44,6 +44,7 @@ app %>%
   flextable::colformat_num(j=1, big.mark = "") %>% 
   flextable::align(j=1, part="all") %>% 
   flextable::valign(valign="bottom", part="header") %>% 
+  flextable::padding(padding=1) %>% 
   flextable::footnote(i = 1, j = 4,
             value = flextable::as_paragraph("Note that the small northern rockfish ABC apportionments from the Eastern Gulf are combined with the other rockfish complex ABC in the West Yakutat management area for management purposes and are removed here from the Team recommended apportionments and ABC totals for northern rockfish."),
             ref_symbols = c("*"),
